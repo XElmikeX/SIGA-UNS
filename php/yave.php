@@ -1,46 +1,37 @@
 <?php
-// yave.php - Versión corregida para Railway
+// yave.php - Versión mejorada
 
-// En Railway, las variables se cargan en $_ENV
-$host = $_ENV['PGHOST'] ?? "postgres.railway.internal";
-$port = $_ENV['PGPORT'] ?? "5432";
-$dbname = $_ENV['PGDATABASE'] ?? "railway";
-$user = $_ENV['PGUSER'] ?? "postgres";
-$password = $_ENV['PGPASSWORD'] ?? "";
+// NO intentar conectar automáticamente
+$conexion = null;
 
-// Debug: Verificar variables (quitar en producción)
-if (isset($_GET['debug'])) {
-    echo "<pre>Debug PostgreSQL:<br>";
-    echo "HOST: $host<br>";
-    echo "PORT: $port<br>";
-    echo "DB: $dbname<br>";
-    echo "USER: $user<br>";
-    echo "PASS: " . (empty($password) ? 'VACÍA' : 'DEFINIDA') . "<br>";
-    echo "</pre>";
-}
-
-try {
-    $dsn = "pgsql:host=$host;port=$port;dbname=$dbname;sslmode=require";
-    $conexion = new PDO($dsn, $user, $password);
-    $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+function conectarDB() {
+    global $conexion;
     
-    // Test de conexión rápida
-    $conexion->query("SELECT 1");
-    error_log("✅ Conexión PostgreSQL exitosa a: $host");
-    
-} catch (PDOException $e) {
-    error_log("❌ Error conexión PostgreSQL: " . $e->getMessage());
-    
-    // NO usar die() - eso causa 502
-    // En lugar de eso, mostrar error amigable si estamos en modo debug
-    if (isset($_GET['debug'])) {
-        echo "<div style='background: #ffcccc; padding: 10px; margin: 10px;'>";
-        echo "<strong>Error PostgreSQL:</strong> " . $e->getMessage();
-        echo "<br><strong>DSN usado:</strong> $dsn";
-        echo "</div>";
+    if ($conexion === null) {
+        $host = $_ENV['PGHOST'] ?? getenv('PGHOST');
+        $port = $_ENV['PGPORT'] ?? getenv('PGPORT');
+        $dbname = $_ENV['PGDATABASE'] ?? getenv('PGDATABASE');
+        $user = $_ENV['PGUSER'] ?? getenv('PGUSER');
+        $password = $_ENV['PGPASSWORD'] ?? getenv('PGPASSWORD');
+        
+        // Verificar que todas las variables existen
+        if (empty($host) || empty($port) || empty($dbname) || empty($user) || empty($password)) {
+            error_log("❌ Variables PostgreSQL no configuradas");
+            $conexion = false;
+            return $conexion;
+        }
+        
+        try {
+            $dsn = "pgsql:host=$host;port=$port;dbname=$dbname;sslmode=require";
+            $conexion = new PDO($dsn, $user, $password);
+            $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            error_log("✅ Conexión PostgreSQL exitosa");
+        } catch (PDOException $e) {
+            error_log("❌ Error PostgreSQL: " . $e->getMessage());
+            $conexion = false;
+        }
     }
     
-    // Marcar conexión como fallida pero continuar
-    $conexion = false;
+    return $conexion;
 }
 ?>
