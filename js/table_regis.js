@@ -78,7 +78,7 @@ function enviarFormulario(e) {
         const formData = new FormData(formRegister);
         
         // Asegúrate de que la URL sea correcta
-        fetch('/php/proceso-register.php', {
+        fetch('./php/proceso-register.php', {
             method: 'POST',
             body: formData
         })

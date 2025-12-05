@@ -7,7 +7,7 @@
 
     <link rel="icon" href="imagenes/logo.png">
     
-    <link rel="stylesheet" href="/tabla.css">
+    <link rel="stylesheet" href="tabla.css">
 </head>
 <body>
     
