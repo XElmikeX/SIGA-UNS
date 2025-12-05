@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Horario De Trabajo</title>
 
-    <link rel="icon" href="/imagenes/logo.png">
+    <link rel="icon" href="imagenes/logo.png">
     
     <link rel="stylesheet" href="/tabla.css">
 </head>
@@ -220,5 +220,5 @@
     </div>
 </body>
     
-    <script src="/js/table_regis.js"></script>
+    <script src="js/table_regis.js"></script>
 </html>
