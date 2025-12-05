@@ -1,3 +1,26 @@
+<?php
+// index.php - Versión mejorada
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+// Incluir yave.php SIN forzar conexión
+require_once __DIR__ . '/php/yave.php';
+
+// Verificar conexión solo si se necesita
+if (isset($_POST) || isset($_GET['action'])) {
+    // Solo conectar si hay operación de formulario
+    conectarDB();
+}
+
+// Si hay error de conexión, mostrar mensaje amigable
+if ($conexion === false) {
+    // Mostrar mensaje pero NO detener ejecución
+    echo '<div style="background: yellow; padding: 10px; margin: 10px;">';
+    echo '⚠️ Base de datos temporalmente no disponible. Los datos se guardarán localmente.';
+    echo '</div>';
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

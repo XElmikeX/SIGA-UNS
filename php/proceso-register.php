@@ -1,6 +1,14 @@
 <?php
 include __DIR__ . "/yave.php";  // Usa __DIR__ para ruta absoluta;
 
+if (!$conexion) {
+    header('Content-Type: application/json');
+    echo json_encode([
+        'success' => false,
+        'message' => 'Base de datos no disponible. Intente más tarde.'
+    ]);
+    exit();
+}
 // Este archivo solo procesa peticiones POST
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
     header('Content-Type: application/json');

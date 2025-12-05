@@ -4,29 +4,21 @@ FROM php:8.2-apache
 RUN apt-get update && apt-get install -y \
     libpq-dev \
     && docker-php-ext-install pdo pdo_pgsql \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    && apt-get clean
 
-# Habilitar rewrite
-RUN a2enmod rewrite
-
-# Copiar archivos
-COPY . /var/www/html/
-
-# Configuración específica para Railway
-# 1. Configurar ServerName para eliminar advertencia
+# Configurar Apache para Railway
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
-# 2. Crear script de inicio dinámico
-RUN echo '#!/bin/bash\n\
-# Usar puerto de Railway\n\
-sed -i "s/80/$PORT/g" /etc/apache2/sites-available/000-default.conf /etc/apache2/ports.conf\n\
-echo "Apache escuchando en puerto: $PORT"\n\
-exec apache2-foreground' > /usr/local/bin/start.sh
+# Habilitar módulos
+RUN a2enmod rewrite
 
-RUN chmod +x /usr/local/bin/start.sh
+# Permitir que Apache lea variables de entorno
+RUN echo "PassEnv PGHOST PGPORT PGDATABASE PGUSER PGPASSWORD" >> /etc/apache2/apache2.conf
 
-# Exponer puerto (simbólico, Railway lo maneja)
-EXPOSE 8080
+# Copiar aplicación
+COPY . /var/www/html/
 
-CMD ["/usr/local/bin/start.sh"]
+# Script de inicio para Railway
+CMD sed -i "s/80/\$PORT/g" /etc/apache2/sites-available/000-default.conf /etc/apache2/ports.conf && \
+    echo "Apache escuchando en puerto: \$PORT" && \
+    apache2-foreground

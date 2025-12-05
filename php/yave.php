@@ -1,36 +1,46 @@
 <?php
-// Configuración para PostgreSQL en Railway
-$host = getenv('PGHOST') ?: "postgres.railway.internal";
-$port = getenv('PGPORT') ?: "5432";
-$dbname = getenv('PGDATABASE') ?: "railway";
-$user = getenv('PGUSER') ?: "postgres";
-$password = getenv('PGPASSWORD');
+// yave.php - Versión corregida para Railway
 
-// Añadir SSL para Railway
-$ssl = "sslmode=require";
+// En Railway, las variables se cargan en $_ENV
+$host = $_ENV['PGHOST'] ?? "postgres.railway.internal";
+$port = $_ENV['PGPORT'] ?? "5432";
+$dbname = $_ENV['PGDATABASE'] ?? "railway";
+$user = $_ENV['PGUSER'] ?? "postgres";
+$password = $_ENV['PGPASSWORD'] ?? "";
+
+// Debug: Verificar variables (quitar en producción)
+if (isset($_GET['debug'])) {
+    echo "<pre>Debug PostgreSQL:<br>";
+    echo "HOST: $host<br>";
+    echo "PORT: $port<br>";
+    echo "DB: $dbname<br>";
+    echo "USER: $user<br>";
+    echo "PASS: " . (empty($password) ? 'VACÍA' : 'DEFINIDA') . "<br>";
+    echo "</pre>";
+}
 
 try {
-    $dsn = "pgsql:host=$host;port=$port;dbname=$dbname;$ssl";
+    $dsn = "pgsql:host=$host;port=$port;dbname=$dbname;sslmode=require";
     $conexion = new PDO($dsn, $user, $password);
     $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
-    // Opcional: probar conexión
-    // $conexion->query("SELECT 1");
+    // Test de conexión rápida
+    $conexion->query("SELECT 1");
+    error_log("✅ Conexión PostgreSQL exitosa a: $host");
     
 } catch (PDOException $e) {
-    // Para Railway, solo log
-    error_log("Error DB Connection: " . $e->getMessage());
+    error_log("❌ Error conexión PostgreSQL: " . $e->getMessage());
     
-    // Respuesta JSON para API calls
-    if (php_sapi_name() !== 'cli') {
-        header('Content-Type: application/json');
-        http_response_code(500);
-        echo json_encode([
-            'success' => false,
-            'message' => 'Database connection error'
-        ]);
-        exit();
+    // NO usar die() - eso causa 502
+    // En lugar de eso, mostrar error amigable si estamos en modo debug
+    if (isset($_GET['debug'])) {
+        echo "<div style='background: #ffcccc; padding: 10px; margin: 10px;'>";
+        echo "<strong>Error PostgreSQL:</strong> " . $e->getMessage();
+        echo "<br><strong>DSN usado:</strong> $dsn";
+        echo "</div>";
     }
-    die("Database connection error");
+    
+    // Marcar conexión como fallida pero continuar
+    $conexion = false;
 }
 ?>
