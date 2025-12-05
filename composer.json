@@ -1,0 +1,13 @@
+{
+  "name": "siga-uns/horarios",
+  "description": "Sistema de horarios UNS con PHP puro",
+  "type": "project",
+  "require": {
+    "php": "^8.2",
+    "ext-pdo": "*",
+    "ext-pdo_pgsql": "*"
+  },
+  "scripts": {
+    "start": "php -S 0.0.0.0:$PORT"
+  }
+}
