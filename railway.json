@@ -6,7 +6,7 @@
   "deploy": {
     "startCommand": "php -S 0.0.0.0:$PORT",
     "restartPolicyType": "ON_FAILURE",
-    "healthcheckPath": "/",
+    "healthcheckPath": "/health.php",
     "healthcheckTimeout": 30
   }
 }

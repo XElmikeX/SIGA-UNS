@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Horario De Trabajo</title>
 
-    <link rel="icon" href="imagenes/logo.png">
-
-    <link rel="stylesheet" href="tabla.css">
+    <link rel="icon" href="/imagenes/logo.png">
+    
+    <link rel="stylesheet" href="/tabla.css">
 </head>
 <body>
     
