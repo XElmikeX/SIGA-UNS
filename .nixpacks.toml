@@ -1,0 +1,8 @@
+[phases.setup]
+aptPackages = ["libpq-dev"]
+
+[phases.install]
+nixPkgs = ["postgresql"]
+
+[start]
+cmd = "php -S 0.0.0.0:$PORT"
