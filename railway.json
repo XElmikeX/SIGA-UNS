@@ -7,7 +7,6 @@
   "deploy": {
     "restartPolicyType": "ON_FAILURE",
     "healthcheckPath": "/health.php",
-    "healthcheckTimeout": 30,
-    "startCommand": ""
+    "healthcheckTimeout": 30
   }
 }

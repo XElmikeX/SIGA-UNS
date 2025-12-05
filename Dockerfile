@@ -1,25 +1,27 @@
-FROM debian:bookworm-slim
+FROM php:8.2-apache
 
-# Instalar Apache, PHP y extensiones PostgreSQL
+# Instalar extensiones PostgreSQL
 RUN apt-get update && apt-get install -y \
-    apache2 \
-    libapache2-mod-php \
-    php-pgsql \
-    curl \
+    libpq-dev \
+    && docker-php-ext-install pdo pdo_pgsql \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Crear directorio de la aplicación
-WORKDIR /var/www/html
+# Habilitar módulos Apache
+RUN a2enmod rewrite
 
-# Copiar TODOS los archivos de tu proyecto
-COPY . .
+# Copiar archivos de la aplicación
+COPY . /var/www/html/
 
 # Configurar Apache para Railway
-RUN echo "Listen \${PORT}" > /etc/apache2/ports.conf
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
-# Crear virtual host para Railway
-RUN echo "<VirtualHost *:\${PORT}>\n\
+# Crear archivo de configuración para puerto dinámico
+RUN echo "Listen \${PORT}" > /etc/apache2/ports-railway.conf
+RUN echo "IncludeOptional ports-railway.conf" >> /etc/apache2/apache2.conf
+
+# Configurar virtual host para Railway
+RUN echo '<VirtualHost *:${PORT}>\n\
     ServerName localhost\n\
     DocumentRoot /var/www/html\n\
     <Directory /var/www/html>\n\
@@ -29,19 +31,17 @@ RUN echo "<VirtualHost *:\${PORT}>\n\
     </Directory>\n\
     ErrorLog \${APACHE_LOG_DIR}/error.log\n\
     CustomLog \${APACHE_LOG_DIR}/access.log combined\n\
-</VirtualHost>" > /etc/apache2/sites-available/000-railway.conf
+</VirtualHost>' > /etc/apache2/sites-available/000-railway.conf
 
-# Habilitar módulos y sitio
-RUN a2enmod rewrite && \
-    a2dissite 000-default && \
-    a2ensite 000-railway
+# Habilitar sitio de Railway
+RUN a2dissite 000-default
+RUN a2ensite 000-railway
 
-# Exponer puerto dinámico
-EXPOSE ${PORT}
-
-# Script de inicio que reemplaza $PORT
+# Script de inicio para Railway
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+
+EXPOSE ${PORT}
 
 ENTRYPOINT ["docker-entrypoint.sh"]
 CMD ["apache2-foreground"]
