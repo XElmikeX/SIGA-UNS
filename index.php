@@ -1,14 +1,41 @@
 <?php
-// index.php - Versión mejorada
+// index.php - VERSIÓN DEBUG
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
 
-// Corregir esta línea:
-require_once __DIR__ . '/yave.php'; // <-- Quita el /php/
+echo "✅ DEBUG: PHP está funcionando (v" . phpversion() . ")<br>";
+echo "✅ DEBUG: Script iniciado<br>";
 
-if (strpos($_SERVER['REQUEST_URI'], '/health.php') !== false) {
-    exit(); // Salir si es healthcheck
+// Cargar yave.php de forma segura
+echo "✅ DEBUG: Intentando cargar yave.php...<br>";
+
+if (file_exists(__DIR__ . '/yave.php')) {
+    echo "✅ DEBUG: yave.php existe<br>";
+    
+    // Intentar incluir con manejo de errores
+    try {
+        require_once __DIR__ . '/yave.php';
+        echo "✅ DEBUG: yave.php cargado exitosamente<br>";
+        
+        // Probar conexión
+        $conn = conectarDB();
+        if ($conn) {
+            echo "✅ DEBUG: Conexión a PostgreSQL exitosa<br>";
+        } else {
+            echo "⚠️ DEBUG: No se pudo conectar a PostgreSQL<br>";
+        }
+    } catch (Exception $e) {
+        echo "❌ DEBUG: Error al cargar yave.php: " . $e->getMessage() . "<br>";
+    }
+} else {
+    echo "❌ DEBUG: yave.php NO existe en: " . __DIR__ . "/yave.php<br>";
 }
+
+echo "✅ DEBUG: Continuando con el resto de la página...<br>";
+echo "<hr>";
+
+// AHORA el HTML normal de tu página...
 ?>
 
 <!DOCTYPE html>

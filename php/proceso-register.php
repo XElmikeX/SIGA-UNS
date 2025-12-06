@@ -4,7 +4,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 // proceso-register.php - CORREGIR RUTAS
 // RUTA CORRECTA según image.png: php/yave.php
-require_once dirname(__DIR__) . '/yave.php'; // ✅ CON PUNTO Y COMA
+require_once __DIR__ . '/../yave.php'; // ✅ CON PUNTO Y COMA
 
 // Llamar a conectarDB() explícitamente
 $conexion = conectarDB();

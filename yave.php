@@ -1,4 +1,19 @@
 <?php
+// yave.php - AGREGAR AL INICIO
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
+echo "🔧 yave.php cargado<br>";
+
+$database_url = getenv('DATABASE_URL');
+echo "DATABASE_URL: " . ($database_url ? 'CONFIGURADA' : 'NO CONFIGURADA') . "<br>";
+
+if ($database_url) {
+    // Mostrar info segura (sin password)
+    $url = parse_url($database_url);
+    echo "Host: " . ($url['host'] ?? 'N/A') . "<br>";
+    echo "DB: " . substr($url['path'] ?? '', 1) . "<br>";
+}
 // yave.php - VERSIÓN PARA POSTGRES ÚNICO
 $conexion = null;
 
