@@ -1,7 +1,7 @@
 <?php
-// yave.php - SOLUCIÓN FINAL Y ROBUSTA PARA RAILWAY
+// yave.php - SOLUCIÓN FINAL CON PARSING Y SSL PARA RAILWAY
 error_reporting(E_ALL);
-ini_set('display_errors', 1); // Mostrar errores para depuración
+ini_set('display_errors', 1);
 
 $conexion = null;
 
@@ -48,6 +48,7 @@ function conectarDB() {
         error_log("✅ Conexión a PostgreSQL establecida.");
         return $conexion;
     } catch (PDOException $e) {
+        // Esto registrará el error específico de la DB, como credenciales o SSL.
         error_log("❌ Error de Conexión PDO: " . $e->getMessage());
         return false;
     } catch (Exception $e) {
