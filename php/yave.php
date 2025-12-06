@@ -1,34 +1,49 @@
 <?php
-// yave.php - Versión mejorada
+// yave.php - Versión mejorada para Railway
 
-// NO intentar conectar automáticamente
 $conexion = null;
 
 function conectarDB() {
     global $conexion;
     
     if ($conexion === null) {
-        $host = $_ENV['PGHOST'] ?? getenv('PGHOST');
-        $port = $_ENV['PGPORT'] ?? getenv('PGPORT');
-        $dbname = $_ENV['PGDATABASE'] ?? getenv('PGDATABASE');
-        $user = $_ENV['PGUSER'] ?? getenv('PGUSER');
-        $password = $_ENV['PGPASSWORD'] ?? getenv('PGPASSWORD');
+        // Opción 1: Usar DATABASE_URL (la que te da Railway)
+        $database_url = $_ENV['DATABASE_URL'] ?? getenv('DATABASE_URL');
         
-        // Verificar que todas las variables existen
-        if (empty($host) || empty($port) || empty($dbname) || empty($user) || empty($password)) {
-            error_log("❌ Variables PostgreSQL no configuradas");
+        if ($database_url) {
+            // Parsear la URL de Railway
+            $url = parse_url($database_url);
+            $host = $url['host'];
+            $port = $url['port'] ?? 5432;
+            $dbname = substr($url['path'], 1); // Quita el / inicial
+            $username = $url['user'];
+            $password = $url['pass'];
+        } else {
+            // Opción 2: Usar variables individuales
+            $host = $_ENV['PGHOST'] ?? getenv('PGHOST');
+            $port = $_ENV['PGPORT'] ?? getenv('PGPORT');
+            $dbname = $_ENV['PGDATABASE'] ?? getenv('PGDATABASE');
+            $username = $_ENV['PGUSER'] ?? getenv('PGUSER');
+            $password = $_ENV['PGPASSWORD'] ?? getenv('PGPASSWORD');
+        }
+        
+        // Verificar que tenemos datos de conexión
+        if (empty($host)) {
+            error_log("❌ Variables PostgreSQL no configuradas en Railway");
             $conexion = false;
             return $conexion;
         }
         
         try {
             $dsn = "pgsql:host=$host;port=$port;dbname=$dbname;sslmode=require";
-            $conexion = new PDO($dsn, $user, $password);
+            $conexion = new PDO($dsn, $username, $password);
             $conexion->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            error_log("✅ Conexión PostgreSQL exitosa");
+            error_log("✅ Conexión PostgreSQL exitosa a: $host");
+            return $conexion;
         } catch (PDOException $e) {
             error_log("❌ Error PostgreSQL: " . $e->getMessage());
             $conexion = false;
+            return $conexion;
         }
     }
     

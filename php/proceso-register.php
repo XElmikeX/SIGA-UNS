@@ -1,6 +1,6 @@
 <?php
-// proceso-register.php
-// Incluir yave.php desde el directorio actual
+// proceso-register.php - CORREGIR RUTAS
+// RUTA CORRECTA según image.png: php/yave.php
 require_once __DIR__ . '/yave.php';
 
 // Llamar a conectarDB() explícitamente
