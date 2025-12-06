@@ -10,41 +10,34 @@ function conectarDB() {
     if ($conexion !== null) return $conexion;
 
     $db_url = getenv('DATABASE_URL');
-    
     if (empty($db_url)) {
         error_log("🚨 Error: DATABASE_URL no definida");
         return false;
     }
 
-    // 1. ⭐ PASO CRÍTICO: Parsear la URL (URI) de Railway
     $db_opts = parse_url($db_url);
     
-    // Fallo de parsing básico
-    if ($db_opts === false || !isset($db_opts['host'], $db_opts['port'], $db_opts['path'], $db_opts['user'], $db_opts['pass'])) {
+    if ($db_opts === false || !isset($db_opts['host'], $db_opts['path'], $db_opts['user'], $db_opts['pass'])) {
         error_log("🚨 Error: Fallo al parsear DATABASE_URL.");
         return false;
     }
     
     $host = $db_opts['host'];
-    $port = $db_opts['port'];
-    // Quitar el '/' inicial de la ruta del DB
+    $port = $db_opts['port'] ?? 5432; // Puerto por defecto
     $db   = ltrim($db_opts['path'], '/'); 
     $user = $db_opts['user'];
     $pass = $db_opts['pass'];
 
-    // 2. Construir DSN estándar para PDO (pgsql:host=...;dbname=...)
-    $dsn = "pgsql:host=$host;port=$port;dbname=$db";
+    // 1. DSN con requerimiento SSL integrado, evitando la constante PDO::SSL_REQUIRED
+    $dsn = "pgsql:host=$host;port=$port;dbname=$db;sslmode=require"; 
 
-    // 3. Opciones de conexión (Incluyendo SSL)
+    // 2. Opciones de conexión estándar
     $options = [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-        // CRÍTICO: Requerir SSL para PostgreSQL en Railway
-        PDO::ATTR_SSL_MODE => PDO::SSL_REQUIRED 
     ];
 
     try {
-        // Si esta línea falla, es la causa del 502
         $conexion = new PDO($dsn, $user, $pass, $options);
         error_log("✅ Conexión a PostgreSQL establecida.");
         return $conexion;
