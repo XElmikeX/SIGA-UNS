@@ -19,7 +19,7 @@ function conectarDB() {
     // 1. ⭐ PASO CRÍTICO: Parsear la URL (URI) de Railway
     $db_opts = parse_url($db_url);
     
-    // Verificación de parsing
+    // Fallo de parsing básico
     if ($db_opts === false || !isset($db_opts['host'], $db_opts['port'], $db_opts['path'], $db_opts['user'], $db_opts['pass'])) {
         error_log("🚨 Error: Fallo al parsear DATABASE_URL.");
         return false;
@@ -44,11 +44,12 @@ function conectarDB() {
     ];
 
     try {
+        // Si esta línea falla, es la causa del 502
         $conexion = new PDO($dsn, $user, $pass, $options);
         error_log("✅ Conexión a PostgreSQL establecida.");
         return $conexion;
     } catch (PDOException $e) {
-        // Esto registrará el error específico de la DB, como credenciales o SSL.
+        // Esto atrapará el error de conexión y evitará el 502
         error_log("❌ Error de Conexión PDO: " . $e->getMessage());
         return false;
     } catch (Exception $e) {
