@@ -1,17 +1,27 @@
 # .htaccess
-RewriteEngine On
-RewriteBase /
-
-# Redirigir todas las solicitudes a index.php excepto archivos existentes
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.php [QSA,L]
-
-# Seguridad
 Options -Indexes
-ServerSignature Off
+DirectoryIndex index.php
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    
+    # Redireccionar HTTP a HTTPS (importante para Railway)
+    RewriteCond %{HTTP:X-Forwarded-Proto} !https
+    RewriteCond %{HTTPS} off
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+    
+    # Permitir acceso a archivos estáticos
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule ^ - [L]
+    
+    # Redirigir todo lo demás a index.php
+    RewriteRule ^(.*)$ index.php [QSA,L]
+</IfModule>
 
 # Headers de seguridad
 Header set X-Content-Type-Options "nosniff"
 Header set X-Frame-Options "SAMEORIGIN"
-Header set X-XSS-Protection "1; mode=block"
+
+# Configuración PHP
+php_flag display_errors on
+php_value error_reporting E_ALL
