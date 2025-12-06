@@ -1,2 +1,6 @@
-.nixpacks.toml
-docker-entrypoint.sh
+.git/
+.gitignore
+.railwayignore
+nbproject/
+.DS_Store
+*.log

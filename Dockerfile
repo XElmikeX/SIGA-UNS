@@ -1,16 +1,22 @@
-FROM php:8.2-apache
+# Dockerfile
+FROM php:8.4-apache
 
-# Instalar PostgreSQL
-RUN apt-get update && apt-get install -y libpq-dev \
-    && docker-php-ext-install pdo pdo_pgsql \
-    && apt-get clean
+# Instalar extensiones necesarias
+RUN apt-get update && apt-get install -y \
+    libpq-dev \
+    && docker-php-ext-install pdo pdo_pgsql
 
-# Configurar Apache
-RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+# Habilitar mod_rewrite
 RUN a2enmod rewrite
 
-# Copiar aplicación
+# Copiar archivos de la aplicación
 COPY . /var/www/html/
 
-# Comando de inicio SIMPLE
+# Configurar permisos
+RUN chown -R www-data:www-data /var/www/html
+
+# Puerto expuesto
+EXPOSE 8080
+
+# Comando de inicio
 CMD ["apache2-foreground"]

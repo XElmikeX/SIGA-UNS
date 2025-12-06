@@ -1,5 +1,10 @@
 <?php
-include __DIR__ . "/yave.php";  // Usa __DIR__ para ruta absoluta;
+// proceso-register.php
+// Incluir yave.php desde el directorio actual
+require_once __DIR__ . '/yave.php';
+
+// Llamar a conectarDB() explícitamente
+conectarDB();
 
 if (!$conexion) {
     header('Content-Type: application/json');

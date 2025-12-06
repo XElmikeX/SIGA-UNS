@@ -1,7 +1,5 @@
-# .gitignore
+.env
 vendor/
 node_modules/
-.env
-.DS_Store
 *.log
-/nbproject/private/
+.DS_Store
