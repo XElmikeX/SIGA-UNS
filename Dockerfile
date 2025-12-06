@@ -1,4 +1,4 @@
-# Dockerfile - VERSIÓN SIMPLIFICADA
+# Dockerfile - VERSIÓN CON ENTRYPOINT
 FROM php:8.4-apache
 
 # 1. Instalar PostgreSQL
@@ -34,5 +34,5 @@ RUN find /var/www/html -type f -exec chmod 644 {} \;
 # 8. Puerto
 EXPOSE 8080
 
-# 9. Usar shell para que las variables de entorno se expandan
-CMD ["sh", "-c", "sed -i \"s/Listen 8080/Listen ${PORT:-8080}/g\" /etc/apache2/ports.conf && sed -i \"s/<VirtualHost \\*:8080>/<VirtualHost \\*:${PORT:-8080}>/g\" /etc/apache2/sites-available/000-default.conf && exec apache2-foreground"]
+# 9. SOLO ENTRYPOINT - NO CMD
+ENTRYPOINT ["docker-entrypoint.sh"]
