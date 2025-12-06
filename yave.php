@@ -1,5 +1,5 @@
 <?php
-// yave.php - SOLUCIÓN FINAL CON PARSING Y SSL PARA RAILWAY
+// yave.php - SOLUCIÓN FINAL CON PARSING Y SSL PARA 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
