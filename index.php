@@ -5,6 +5,10 @@ ini_set('display_errors', 1);
 
 // Corregir esta línea:
 require_once __DIR__ . '/yave.php'; // <-- Quita el /php/
+
+if (strpos($_SERVER['REQUEST_URI'], '/health.php') !== false) {
+    exit(); // Salir si es healthcheck
+}
 ?>
 
 <!DOCTYPE html>
