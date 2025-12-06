@@ -1,44 +1,38 @@
+# Dockerfile para Railway con PHP 8.4 y Apache
 FROM php:8.4-apache
 
-# Instalar dependencias para PostgreSQL
-RUN apt-get update && apt-get install -y \
-    libpq-dev \
-    && docker-php-ext-install pdo pdo_pgsql \
-    && apt-get clean
+# 1. Instalar PostgreSQL support
+RUN apt-get update && \
+    apt-get install -y libpq-dev && \
+    docker-php-ext-install pdo pdo_pgsql && \
+    apt-get clean
 
-# Habilitar módulos Apache
-FROM php:8.4-apache
+# 2. Habilitar módulos Apache
+RUN a2enmod rewrite
+RUN a2enmod headers
 
-# Instalar dependencias para PostgreSQL
-RUN apt-get update && apt-get install -y \
-    libpq-dev \
-    && docker-php-ext-install pdo pdo_pgsql \
-    && apt-get clean
+# 3. Configuración básica de Apache
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+RUN sed -i 's/AllowOverride None/AllowOverride All/g' /etc/apache2/apache2.conf
 
-# Habilitar módulos Apache
-RUN a2enmod rewrite headers
+# 4. Configurar puerto inicial (será modificado por entrypoint)
+RUN sed -i 's/Listen 80/Listen 8080/' /etc/apache2/ports.conf
+RUN sed -i 's/<VirtualHost \*:80>/<VirtualHost \*:8080>/' /etc/apache2/sites-available/000-default.conf
 
-# Configurar Apache
-RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf && \
-    sed -i 's/AllowOverride None/AllowOverride All/g' /etc/apache2/apache2.conf
-
-# Preconfigurar para puerto 8080 (será cambiado por el entrypoint)
-RUN sed -i "s/Listen 80/Listen 8080/g" /etc/apache2/ports.conf && \
-    sed -i "s/<VirtualHost \*:80>/<VirtualHost \*:8080>/g" /etc/apache2/sites-available/000-default.conf
-
-# Copiar archivos
+# 5. Copiar aplicación
 COPY . /var/www/html/
 
-# Copiar y dar permisos al entrypoint
+# 6. Configurar entrypoint
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
-# Permisos
-RUN chown -R www-data:www-data /var/www/html && \
-    chmod -R 755 /var/www/html
+# 7. Permisos
+RUN chown -R www-data:www-data /var/www/html
+RUN find /var/www/html -type d -exec chmod 755 {} \;
+RUN find /var/www/html -type f -exec chmod 644 {} \;
 
-# Puerto
+# 8. Puerto
 EXPOSE 8080
 
-# Usar entrypoint
+# 9. Entrypoint para puerto dinámico
 ENTRYPOINT ["docker-entrypoint.sh"]
