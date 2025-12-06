@@ -1,10 +1,10 @@
 <?php
-// proceso-register.php - VERSIÓN CORREGIDA
+// proceso-register.php - VERSIÓN CORREGIDA FINAL
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-// proceso-register.php - CORREGIR RUTAS
-// RUTA CORRECTA según image.png: php/yave.php
-require_once __DIR__ . '/../yave.php'; // ✅ CON PUNTO Y COMA
+
+// RUTA CORRECTA (asumiendo que estás en una subcarpeta, y yave.php está en la raíz)
+require_once __DIR__ . '/../yave.php'; 
 
 // Llamar a conectarDB() explícitamente
 $conexion = conectarDB();
@@ -15,8 +15,11 @@ if (!$conexion) {
         'success' => false,
         'message' => 'Base de datos no disponible. Intente más tarde.'
     ]);
+    // Registrar el error para ver si la conexión falla aquí
+    error_log("proceso-register.php: Conexión fallida al inicio.");
     exit();
 }
+
 // Este archivo solo procesa peticiones POST
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
     header('Content-Type: application/json');
@@ -30,51 +33,19 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
     
-    // Usar htmlspecialchars para seguridad (PDO ya maneja la seguridad con prepared statements)
     $userName = htmlspecialchars($_POST["userName"]);
     $userEmail = htmlspecialchars($_POST["userEmail"]);
+    // Cifrar la contraseña
     $userPassword = password_hash($_POST["userPassword"], PASSWORD_DEFAULT);
-
+    
     try {
-        // VERIFICACION DE REGISTRO - Usar prepared statements
-        $checkQuery = "SELECT * FROM usuarios WHERE nombre_usuario = :userName OR email_usuario = :userEmail";
-        $stmt = $conexion->prepare($checkQuery);
-        $stmt->execute([
-            ':userName' => $userName,
-            ':userEmail' => $userEmail
-        ]);
+        // 1. Verificar si el email ya existe
+        $checkQuery = "SELECT COUNT(*) FROM usuarios WHERE email_usuario = :userEmail";
+        $stmtCheck = $conexion->prepare($checkQuery);
+        $stmtCheck->execute([':userEmail' => $userEmail]);
         
-        $existingUsers = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
-        $nameExists = false;
-        $emailExists = false;
-        
-        foreach ($existingUsers as $user) {
-            if ($user['nombre_usuario'] === $userName) {
-                $nameExists = true;
-            }
-            if ($user['email_usuario'] === $userEmail) {
-                $emailExists = true;
-            }
-        }
-
-        if ($nameExists && $emailExists) {
-            echo json_encode([
-                'success' => false,
-                'message' => 'NOMBRE Y GMAIL EXISTENTES'
-            ]);
-            exit();
-        }
-
-        if ($nameExists) {
-            echo json_encode([
-                'success' => false,
-                'message' => 'NOMBRE EXISTENTE'
-            ]);
-            exit();
-        }
-
-        if ($emailExists) {
+        // Uso de fetchColumn para obtener el conteo (más eficiente que rowCount en algunos drivers)
+        if ($stmtCheck->fetchColumn() > 0) {
             echo json_encode([
                 'success' => false,
                 'message' => 'GMAIL EXISTENTE'
@@ -82,7 +53,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             exit();
         }
 
-        // ENVIO EXITOSO - Usar prepared statements
+        // 2. Insertar el nuevo usuario
         $insertQuery = "INSERT INTO usuarios(nombre_usuario, email_usuario, password_usuario) 
                        VALUES(:userName, :userEmail, :userPassword)";
         $stmt = $conexion->prepare($insertQuery);
@@ -99,7 +70,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 'user' => [
                     'userName' => $userName,
                     'userEmail' => $userEmail,
-                    'userPassword' => $userPassword
+                    'userPassword' => $_POST["userPassword"] // Devuelve la original para JS, no el hash
                 ]
             ]);
         } else {
@@ -110,6 +81,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
         
     } catch (PDOException $e) {
+        error_log("Error en DB (Registro): " . $e->getMessage());
         echo json_encode([
             'success' => false,
             'message' => 'Error en la base de datos: ' . $e->getMessage()
@@ -121,8 +93,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     header('Content-Type: application/json');
     echo json_encode([
         'success' => false,
-        'message' => 'Método no permitido'
+        'message' => 'Acceso denegado. Se requiere método POST.'
     ]);
-    exit();
 }
 ?>
