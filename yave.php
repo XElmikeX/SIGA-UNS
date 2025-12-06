@@ -1,20 +1,8 @@
 <?php
-// yave.php - AGREGAR AL INICIO
+// yave.php - VERSIÓN PARA PRODUCCIÓN SIN ECHO
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-echo "🔧 yave.php cargado<br>";
-
-$database_url = getenv('DATABASE_URL');
-echo "DATABASE_URL: " . ($database_url ? 'CONFIGURADA' : 'NO CONFIGURADA') . "<br>";
-
-if ($database_url) {
-    // Mostrar info segura (sin password)
-    $url = parse_url($database_url);
-    echo "Host: " . ($url['host'] ?? 'N/A') . "<br>";
-    echo "DB: " . substr($url['path'] ?? '', 1) . "<br>";
-}
-// yave.php - VERSIÓN PARA POSTGRES ÚNICO
 $conexion = null;
 
 function conectarDB() {
@@ -24,21 +12,13 @@ function conectarDB() {
         return $conexion;
     }
     
-    // Railway te da esta variable automáticamente
     $database_url = getenv('DATABASE_URL');
     
-    // Debug (visible solo si hay error)
     if (empty($database_url)) {
         error_log("🚨 yave.php: DATABASE_URL VACÍA");
-        error_log("   Verifica en Railway: DATABASE_URL=\${Postgres.DATABASE_URL}");
         $conexion = false;
         return $conexion;
     }
-    
-    // Mostrar info de debug (ocultando contraseña)
-    $url_info = parse_url($database_url);
-    $host_debug = $url_info['host'] ?? 'desconocido';
-    error_log("🔗 yave.php: Conectando a: $host_debug");
     
     try {
         // Railway requiere SSL
@@ -59,7 +39,6 @@ function conectarDB() {
     } catch (PDOException $e) {
         error_log("❌ yave.php: Error PDO: " . $e->getMessage());
         
-        // Info para debug (sin contraseña)
         $safe_url = preg_replace('/:[^:@]*@/', ':****@', $database_url);
         error_log("   URL usada: $safe_url");
         
@@ -68,7 +47,6 @@ function conectarDB() {
     }
 }
 
-// Función helper para debug
 function getDBInfo() {
     $conn = conectarDB();
     if (!$conn) {
