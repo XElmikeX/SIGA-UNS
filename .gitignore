@@ -1,5 +1,7 @@
-.env
-vendor/
-node_modules/
-*.log
-.DS_Store
+# Edita .gitignore o crea uno nuevo:
+echo "# NetBeans" >> .gitignore
+echo "nbproject/" >> .gitignore
+echo "*.backup" >> .gitignore
+echo "node_modules/" >> .gitignore
+echo "vendor/" >> .gitignore
+echo ".env" >> .gitignore
