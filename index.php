@@ -123,3 +123,10 @@ if (file_exists(__DIR__ . '/yave.php')) {
     <script src="js/table_regis.js"></script>
 </body>
 </html>
+
+<?php if (!$db_connected): ?> 
+    <div style="background:yellow; padding:10px; margin:10px;">
+        <strong>⚠️ Advertencia:</strong> Base de datos no disponible. 
+        <a href="/verificar-conexion.php">Verificar conexión</a>
+    </div>
+<?php endif; ?>
