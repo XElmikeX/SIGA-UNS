@@ -5,8 +5,8 @@ RUN apt-get update && apt-get install -y \
     libpq-dev \
     && docker-php-ext-install pdo pdo_pgsql
 
-# Habilitar módulos de Apache
-RUN a2enmod rewrite
+# Habilitar módulos de Apache (AGREGA headers)
+RUN a2enmod rewrite && a2enmod headers
 
 # Copiar archivos de la aplicación
 COPY . /var/www/html/

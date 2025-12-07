@@ -1,5 +1,5 @@
 <?php
-// index.php - VERSIÓN ORIGINAL
+// index.php - VERSIÓN CORREGIDA
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -74,7 +74,7 @@ if (file_exists(__DIR__ . '/yave.php')) {
         <?php if (!$db_connected): ?>
         <div style="background:yellow; padding:10px; margin:10px;">
             <strong>⚠️ Advertencia:</strong> Base de datos no disponible. 
-            <a href="/verificar-conexion.php">Verificar conexión</a>
+            <a href="verificar-conexion.php">Verificar conexión</a>  <!-- RUTA CORREGIDA -->
         </div>
         <?php endif; ?>
         
@@ -124,10 +124,4 @@ if (file_exists(__DIR__ . '/yave.php')) {
     <script src="js/table_regis.js"></script>
 </body>
 </html>
-
-<?php if (!$db_connected): ?> 
-    <div style="background:yellow; padding:10px; margin:10px;">
-        <strong>⚠️ Advertencia:</strong> Base de datos no disponible. 
-        <a href="/verificar-conexion.php">Verificar conexión</a>
-    </div>
-<?php endif; ?>
+<!-- NO PONGAS NADA MÁS AQUÍ - EL ARCHIVO TERMINA -->

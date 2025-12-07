@@ -1,19 +1,10 @@
-# .htaccess
+# .htaccess SIMPLIFICADO
 RewriteEngine On
 
-# Redirigir todas las solicitudes a index.php
+# Redirigir a index.php si el archivo no existe
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php [QSA,L]
 
-# Configuración de seguridad
+# Seguridad
 Options -Indexes
-
-# Manejo de errores personalizado
-ErrorDocument 404 /index.php
-ErrorDocument 500 /index.php
-
-# Cache control
-<FilesMatch "\.(php)$">
-    Header set Cache-Control "no-cache, no-store, must-revalidate"
-</FilesMatch>
