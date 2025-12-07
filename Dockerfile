@@ -8,14 +8,14 @@ RUN apt-get update && apt-get install -y \
 # Habilitar módulos de Apache
 RUN a2enmod rewrite
 
-# Configurar Apache ANTES de copiar archivos
+# Configurar Apache
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
 
-# Configurar puerto 8080 SOLO UNA VEZ
-RUN echo "Listen 8080" > /etc/apache2/ports.conf
+# ✅ USAR PUERTO DINÁMICO ${PORT} que Railway asigna
+RUN echo "Listen ${PORT:-8080}" > /etc/apache2/ports.conf
 
-# Configurar VirtualHost para puerto 8080
-RUN echo '<VirtualHost *:8080>' > /etc/apache2/sites-available/000-default.conf
+# Configurar VirtualHost con puerto dinámico
+RUN echo '<VirtualHost *:${PORT:-8080}>' > /etc/apache2/sites-available/000-default.conf
 RUN echo '    ServerAdmin webmaster@localhost' >> /etc/apache2/sites-available/000-default.conf
 RUN echo '    DocumentRoot /var/www/html' >> /etc/apache2/sites-available/000-default.conf
 RUN echo '    ErrorLog ${APACHE_LOG_DIR}/error.log' >> /etc/apache2/sites-available/000-default.conf
@@ -35,9 +35,6 @@ COPY . /var/www/html/
 
 # Configurar permisos
 RUN chown -R www-data:www-data /var/www/html
-
-# Puerto expuesto
-EXPOSE 8080
 
 # Comando simple
 CMD ["apache2-foreground"]
