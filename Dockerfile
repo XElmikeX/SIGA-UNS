@@ -10,8 +10,9 @@ RUN a2enmod rewrite
 
 # Configurar Apache ANTES de copiar archivos
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+
+# Configurar puerto 8080 SOLO UNA VEZ
 RUN echo "Listen 8080" > /etc/apache2/ports.conf
-RUN echo "Listen 8080" >> /etc/apache2/ports.conf
 
 # Configurar VirtualHost para puerto 8080
 RUN echo '<VirtualHost *:8080>' > /etc/apache2/sites-available/000-default.conf
@@ -26,9 +27,7 @@ RUN echo '        Require all granted' >> /etc/apache2/sites-available/000-defau
 RUN echo '    </Directory>' >> /etc/apache2/sites-available/000-default.conf
 RUN echo '</VirtualHost>' >> /etc/apache2/sites-available/000-default.conf
 
-# Deshabilitar sitio por defecto en puerto 80
-RUN a2dissite 000-default.conf
-# Habilitar nuestro sitio en puerto 8080
+# Habilitar nuestro sitio
 RUN a2ensite 000-default.conf
 
 # Copiar archivos de la aplicación
