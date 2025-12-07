@@ -1,10 +1,9 @@
-# .htaccess SIMPLIFICADO
-RewriteEngine On
+# .htaccess - CONFIGURACIÓN MÍNIMA
+DirectoryIndex index.php
+Options -Indexes
 
-# Redirigir a index.php si el archivo no existe
+# Redireccionar todas las solicitudes a index.php
+RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php [QSA,L]
-
-# Seguridad
-Options -Indexes
