@@ -1,5 +1,5 @@
 <?php
-// index.php - VERSIÓN CORREGIDA PARA PRODUCCIÓN
+// index.php - VERSIÓN ORIGINAL
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -21,6 +21,7 @@ if (file_exists(__DIR__ . '/yave.php')) {
     error_log("yave.php no encontrado");
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
