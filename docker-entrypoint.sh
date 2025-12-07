@@ -1,12 +1,10 @@
 #!/bin/bash
-# docker-entrypoint.sh - VERSIÓN SUPER SIMPLE
+# docker-entrypoint.sh - VERSIÓN MÍNIMA FUNCIONAL
 PORT=${PORT:-8080}
-echo "Usando puerto: ${PORT}"
+echo "Iniciando en puerto ${PORT}"
 
-# Configurar Apache para usar el puerto dinámico
+# Solo configurar puerto - nada más
 sed -i "s/Listen 80/Listen ${PORT}/g" /etc/apache2/ports.conf
-sed -i "s/:80/:${PORT}/g" /etc/apache2/sites-available/*.conf
 
 # Iniciar Apache
-echo "🚀 Iniciando Apache..."
 exec apache2-foreground

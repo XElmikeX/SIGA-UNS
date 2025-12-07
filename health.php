@@ -1,4 +1,4 @@
 <?php
-// health.php - VERSIÓN ULTRA SIMPLE
+// health.php - SOLO TEXTO
 echo "OK";
 ?>
