@@ -3,8 +3,8 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-// RUTA CORRECTA (asumiendo que estás en una subcarpeta, y yave.php está en la raíz)
-require_once __DIR__ . '/../yave.php';
+// RUTA CORRECTA (yave.php está en la raíz)
+require_once __DIR__ . '/info-admin.php';
 
 // Llamar a conectarDB() explícitamente
 $conexion = conectarDB();

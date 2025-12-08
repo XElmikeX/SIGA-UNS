@@ -11,7 +11,7 @@ $status = [
 ];
 
 try {
-    require_once __DIR__ . '/yave.php';
+    require_once __DIR__ . '/php/info-admin.php';
     $conn = conectarDB();
     if ($conn) {
         $status['database_connected'] = true;
