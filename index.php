@@ -1,27 +1,3 @@
-<?php
-// index.php - VERSIÓN CORREGIDA
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-
-// Cargar yave.php SILENCIOSAMENTE
-if (file_exists(__DIR__ . '/yave.php')) {
-    require_once __DIR__ . '/yave.php';
-    
-    // Probar conexión PERO no mostrar errores en producción
-    try {
-        $conn = conectarDB();
-        $db_connected = ($conn !== false);
-    } catch (Exception $e) {
-        $db_connected = false;
-        error_log("Error BD: " . $e->getMessage());
-    }
-} else {
-    $db_connected = false;
-    error_log("yave.php no encontrado");
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,15 +45,6 @@ if (file_exists(__DIR__ . '/yave.php')) {
     
     <div class="caja2">
         <h3>Usuarios Registrados</h3>
-        
-        <!-- Debug info solo si hay error -->
-        <?php if (!$db_connected): ?>
-        <div style="background:yellow; padding:10px; margin:10px;">
-            <strong>⚠️ Advertencia:</strong> Base de datos no disponible. 
-            <a href="verificar-conexion.php">Verificar conexión</a>  <!-- RUTA CORREGIDA -->
-        </div>
-        <?php endif; ?>
-        
         <div>
             <form id="form" novalidate>
                 <p class="message" style="font-size: 1.2rem;">Datos del usuario nuevo</p>
@@ -124,4 +91,3 @@ if (file_exists(__DIR__ . '/yave.php')) {
     <script src="js/table_regis.js"></script>
 </body>
 </html>
-<!-- NO PONGAS NADA MÁS AQUÍ - EL ARCHIVO TERMINA -->
