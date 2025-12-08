@@ -1,6 +1,0 @@
-.git/
-.gitignore
-.railwayignore
-nbproject/
-.DS_Store
-*.log
