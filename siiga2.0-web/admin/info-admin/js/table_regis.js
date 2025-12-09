@@ -78,7 +78,7 @@ function enviarFormulario(e) {
         const formData = new FormData(formRegister);
         
         // Asegúrate de que la URL sea correcta
-        fetch('/siiga2.0-web/siiga2.0-web/admin/info-admin/php/proceso-register.php', {
+        fetch('/siiga2.0-web/admin/info-admin/php/process-register.php', {
             method: 'POST',
             body: formData
         })
