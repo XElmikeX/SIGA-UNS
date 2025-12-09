@@ -6,7 +6,7 @@ $tabla = 'admins'; // TABLA FIJA para admins
 
 // Procesar login
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $email = trim($_POST['userEmail'] ?? '');
+    $email = $_POST['userEmail'] ?? '';
     $password = $_POST['userPassword'] ?? '';
     
     if (loginDesdeTabla($tabla, $email, $password)) {

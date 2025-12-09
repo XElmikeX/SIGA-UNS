@@ -2,8 +2,6 @@
 
 require_once __DIR__ . '/db.php';
 
-session_start();
-
 function loginDesdeTabla($tabla, $email, $password) {
     $conn = conectarDB();
 

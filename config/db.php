@@ -1,10 +1,9 @@
 <?php
-// config/db.php - ConeXión PostgreSQL (NO CAMBIA)
 function conectarDB() {
     $db_url = getenv('DATABASE_URL');
     
     $db_opts = parse_url($db_url);
-    
+
     $host = $db_opts['host'];
     $port = $db_opts['port'] ?? 5432;
     $db   = ltrim($db_opts['path'] ?? '/railway', '/');
