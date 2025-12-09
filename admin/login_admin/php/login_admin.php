@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $password = $_POST['password'];
     
     if (loginDesdeTabla($tabla, $email, $password)) {
-        header('Location: ../../info_admin/index.php');
+        header('Location: ../../info-admin/index.php');
         exit();
     } else {
         $error = "Credenciales incorrectas";
