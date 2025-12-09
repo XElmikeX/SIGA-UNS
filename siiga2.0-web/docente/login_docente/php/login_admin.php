@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['userPassword'] ?? '';
     
     if (loginDesdeTabla($tabla, $email, $password)) {
-        header('Location: ../../../docente/info-docen/index.php');
+        header('Location: ../../info-docen/index.php');
         exit();
     }
 }
