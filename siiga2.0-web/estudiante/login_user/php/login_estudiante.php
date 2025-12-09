@@ -2,7 +2,7 @@
 session_start();
 require_once __DIR__ . '/../../../L-config/auth.php';
 
-$tabla = 'usuarios'; // o 'estudiantes' si tu tabla se llama así
+$tabla = 'usuarios'; 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['userEmail'] ?? '';
