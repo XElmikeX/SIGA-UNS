@@ -1,6 +1,6 @@
 <?php
 // RUTA CORRECTA (yave.php está en la raíz)
-require_once __DIR__ . '/yave.php';
+require_once __DIR__ . '/info-admin.php';
 
 // Llamar a conectarDB() explícitamente
 $conexion = conectarDB();
@@ -36,7 +36,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     
     try {
         // 1. Verificar si el email ya existe
-        $checkQuery = "SELECT COUNT(*) FROM usuarios WHERE email = :userEmail";
+        $checkQuery = "SELECT COUNT(*) FROM usuarios WHERE email_usuario = :userEmail";
         $stmtCheck = $conexion->prepare($checkQuery);
         $stmtCheck->execute([':userEmail' => $userEmail]);
         
@@ -50,7 +50,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         // 2. Insertar el nuevo usuario
-        $insertQuery = "INSERT INTO usuarios(usuario, email, password) 
+        $insertQuery = "INSERT INTO usuarios(nombre_usuario, email_usuario, password_usuario) 
                        VALUES(:userName, :userEmail, :userPassword)";
         $stmt = $conexion->prepare($insertQuery);
         $result = $stmt->execute([
