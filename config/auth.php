@@ -6,8 +6,7 @@ session_start();
 
 function loginDesdeTabla($tabla, $email, $password) {
     $conn = conectarDB();
-    if (!$conn) return false;
-    
+
     try {
         // Buscar usuario
         $sql = "SELECT * FROM $tabla WHERE email = :email LIMIT 1";

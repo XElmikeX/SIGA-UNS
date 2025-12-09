@@ -3,11 +3,8 @@
 function conectarDB() {
     $db_url = getenv('DATABASE_URL');
     
-    if (empty($db_url)) {
-        die("Error: DATABASE_URL no configurada");
-    }
-    
     $db_opts = parse_url($db_url);
+    
     $host = $db_opts['host'];
     $port = $db_opts['port'] ?? 5432;
     $db   = ltrim($db_opts['path'] ?? '/railway', '/');
