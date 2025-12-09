@@ -15,7 +15,7 @@ function loginDesdeTabla($tabla, $email, $password) {
         $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
         
         
-        if ($usuario && $usuario['password'] === $password) {
+        if ($usuario['password'] === $password) {
             // REGISTRAR EN LOG (para VERLO después)
             $ip = $_SERVER['REMOTE_ADDR'] ?? 'IP Desconocida';
                 
