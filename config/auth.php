@@ -14,12 +14,21 @@ function loginDesdeTabla($tabla, $email, $password) {
         $stmt->execute([':email' => $email]);
         $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
         
-        if ($usuario) {
-            // Verificar password (hasheado o texto plano temporal)
-            if ($usuario['password'] === $password) {
-                return true;
-            }
+        
+        if ($usuario && $usuario['password'] === $password) {
+            // REGISTRAR EN LOG (para VERLO después)
+            $ip = $_SERVER['REMOTE_ADDR'] ?? 'IP Desconocida';
+                
+            // Mensaje para Railway Logs
+            error_log("=== NUEVO LOGIN DETECTADO ===");
+            error_log("Usuario: $email");
+            error_log("Tipo: $tabla");
+            error_log("IP: $ip");
+            error_log("=============================");
+
+            return true;
         }
+        
     } catch (PDOException $e) {
         error_log("Error login $tabla: " . $e->getMessage());
     }
