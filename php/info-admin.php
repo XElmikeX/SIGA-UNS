@@ -1,5 +1,4 @@
 <?php
-// config/database.php
 function conectarDB() {
     $db_url = getenv('DATABASE_URL');
     
@@ -8,6 +7,7 @@ function conectarDB() {
         return false;
     }
     
+    // Parsear la URL:host, puerto, usuario, contraseña, nom del BD
     $db_opts = parse_url($db_url);
     
     if (!$db_opts || !isset($db_opts['host'])) {
@@ -16,11 +16,12 @@ function conectarDB() {
     }
     
     $host = $db_opts['host'];
-    $port = $db_opts['port'] ?? 5432;
+    $port = $db_opts['port'] ?? 5432; // Usará 8080 si está en la URL
     $db   = ltrim($db_opts['path'] ?? '/railway', '/');
     $user = $db_opts['user'] ?? 'postgres';
     $pass = $db_opts['pass'] ?? '';
     
+    // Asegurar conexión SSL(importante para Railway)
     $dsn = "pgsql:host=$host;port=$port;dbname=$db;sslmode=require";
     
     try {
@@ -29,20 +30,15 @@ function conectarDB() {
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         ]);
         
+        // Verificar si la conexión funciona(SELECT 1)
+        $stmt = $conexion->query("SELECT 1");
+        error_log("PostgreSQL CONECTADO en host:$host, port:$port, db:$db");
+        
         return $conexion;
     } catch (PDOException $e) {
         error_log("Error PDO: " . $e->getMessage());
+        error_log("DSN intentado: $dsn");
         return false;
-    }
-}
-
-// ✅ AÑADE ESTA FUNCIÓN AQUÍ para que auth.php la use
-function obtenerTablaPorTipo($tipo) {
-    switch($tipo) {
-        case 'admin': return 'admins';
-        case 'docente': return 'docentes';
-        case 'usuarios': return 'usuarios';
-        default: return 'usuarios';
     }
 }
 ?>
