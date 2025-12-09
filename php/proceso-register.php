@@ -50,7 +50,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         // 2. Insertar el nuevo usuario
-        $insertQuery = "INSERT INTO usuarios(nombre, email, password) 
+        $insertQuery = "INSERT INTO usuarios(usuario, email, password) 
                        VALUES(:userName, :userEmail, :userPassword)";
         $stmt = $conexion->prepare($insertQuery);
         $result = $stmt->execute([
