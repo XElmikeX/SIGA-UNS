@@ -1,5 +1,5 @@
 <?php
-function conectarDB() {
+function conectarDBinfo() {
     $db_url = getenv('DATABASE_URL');
     
     if (empty($db_url)) {
@@ -25,16 +25,16 @@ function conectarDB() {
     $dsn = "pgsql:host=$host;port=$port;dbname=$db;sslmode=require";
     
     try {
-        $conexion = new PDO($dsn, $user, $pass, [
+        $conexionInfo = new PDO($dsn, $user, $pass, [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
         ]);
         
         // Verificar si la conexión funciona(SELECT 1)
-        $stmt = $conexion->query("SELECT 1");
+        $stmt = $conexionInfo->query("SELECT 1");
         error_log("PostgreSQL CONECTADO en host:$host, port:$port, db:$db");
         
-        return $conexion;
+        return $conexionInfo;
     } catch (PDOException $e) {
         error_log("Error PDO: " . $e->getMessage());
         error_log("DSN intentado: $dsn");

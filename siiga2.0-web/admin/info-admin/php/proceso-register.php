@@ -3,9 +3,9 @@
 require_once __DIR__ . '/yave.php';
 
 // Llamar a conectarDB() explícitamente
-$conexion = conectarDB();
+$conexionInfo = conectarDBinfo();
 
-if (!$conexion) {
+if (!$conexionInfo) {
     header('Content-Type: application/json');
     echo json_encode([
         'success' => false,
@@ -35,7 +35,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     try {
         // 1. Verificar si el email ya existe
         $checkQuery = "SELECT * FROM usuarios WHERE email = :userEmail";
-        $stmtCheck = $conexion->prepare($checkQuery);
+        $stmtCheck = $conexionInfo->prepare($checkQuery);
         $stmtCheck->execute([':userEmail' => $userEmail]);
         
         // Uso de fetchColumn para obtener el conteo (más eficiente que rowCount en algunos drivers)
@@ -50,7 +50,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         // 2. Insertar el nuevo usuario
         $insertQuery = "INSERT INTO usuarios(usuario, email, password) 
                        VALUES(:userName, :userEmail, :userPassword)";
-        $stmt = $conexion->prepare($insertQuery);
+        $stmt = $conexionInfo->prepare($insertQuery);
         $result = $stmt->execute([
             ':userName' => $userName,
             ':userEmail' => $userEmail,
