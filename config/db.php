@@ -1,5 +1,5 @@
 <?php
-// config/db.php - Conexión universal a PostgreSQL
+// config/db.php - ConeXión PostgreSQL (NO CAMBIA)
 function conectarDB() {
     $db_url = getenv('DATABASE_URL');
     
