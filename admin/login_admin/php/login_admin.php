@@ -1,33 +1,29 @@
 <?php
-// admin/login_admin/php/login_admin.php - VERSIÓN CORREGIDA
+// admin/login_admin/php/login_admin.php
 require_once __DIR__ . '/../../../config/auth.php';
 
 $tabla = 'admins';
 $error = '';
 
-// Verificar si ya está logueado
+// 1. Si YA está logueado como admin, redirigir DIRECTAMENTE
 if (isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'admins') {
-    header('Location: ../../info-admin/index.php');
+    // ✅ RUTA CORRECTA: sube 1 nivel (a login_admin/) y entra a info-admin/
+    header('Location: ../info-admin/index.php');
     exit();
 }
 
+// 2. Procesar login si viene POST
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // ✅ Validar y obtener datos
     $email = trim($_POST['userEmail'] ?? '');
     $password = $_POST['userPassword'] ?? '';
     
-    // Validar campos
     if (empty($email) || empty($password)) {
         $error = "Por favor complete todos los campos";
     } else {
         // Intentar login
         if (loginDesdeTabla($tabla, $email, $password)) {
-            // ✅ Redirección ABSOLUTA desde raíz
-            $base_url = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") 
-                        . "://" . $_SERVER['HTTP_HOST'];
-            
-            // Verificar estructura según tu image.png
-            header('Location: ' . $base_url . '/admin/info-admin/index.php');
+            // ✅ REDIRECCIÓN CORRECTA después de login
+            header('Location: ../info-admin/index.php');
             exit();
         } else {
             $error = "Email o contraseña incorrectos";
@@ -35,3 +31,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 ?>
+
+<!-- HTML mínimo para el formulario -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login Admin</title>
+</head>
+<body>
+    <h2>Login Administrador</h2>
+    
+    <?php if ($error): ?>
+        <p style="color: red;"><?php echo $error; ?></p>
+    <?php endif; ?>
+    
+    <form method="POST">
+        <input type="email" name="userEmail" placeholder="Email" required>
+        <input type="password" name="userPassword" placeholder="Contraseña" required>
+        <button type="submit">Ingresar</button>
+    </form>
+    
+    <p><a href="../../../index.php">Volver al inicio</a></p>
+</body>
+</html>
