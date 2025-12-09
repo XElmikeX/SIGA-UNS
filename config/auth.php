@@ -16,16 +16,7 @@ function loginDesdeTabla($tabla, $email, $password) {
         
         if ($usuario) {
             // Verificar password (hasheado o texto plano temporal)
-            if (password_verify($password, $usuario['password'])) {
-                // ✅ Password hasheado correcto
-                $_SESSION['user_id'] = $usuario['id'];
-                $_SESSION['user_name'] = $usuario['usuario'] ?? $usuario['email'];
-                $_SESSION['user_email'] = $usuario['email'];
-                $_SESSION['user_type'] = $tabla;
-                return true;
-            }
-            // ⚠️ Temporal: Si password está en texto plano
-            elseif ($usuario['password'] === $password) {
+            if ($usuario['password'] === $password) {
                 $_SESSION['user_id'] = $usuario['id'];
                 $_SESSION['user_name'] = $usuario['usuario'] ?? $usuario['email'];
                 $_SESSION['user_email'] = $usuario['email'];
