@@ -1,6 +1,6 @@
 <?php
 // admin/login.php
-require_once '../../config/auth.php';
+require_once '../../../config/auth.php';
 
 $tabla = 'admins'; // ✅ TABLA FIJA para admins
 
