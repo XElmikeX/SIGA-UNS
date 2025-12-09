@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['usuario_email'] = $usuario['email'];
         $_SESSION['usuario_tipo'] = 'usuarios'; // ✅ Tipo diferente
         
-        header('Location: dashboard.php');
+        header('Location: ../../info-user/index.html');
         exit();
     } else {
         $error = "Credenciales incorrectas";
