@@ -8,7 +8,7 @@ function autenticarUsuario($email, $password, $tipo) {
     $conexion = conectarDB();
     if (!$conexion) return false;
     
-    $sql = "SELECT * FROM $tipo WHERE email_usuario = :email LIMIT 1";
+    $sql = "SELECT * FROM $tipo WHERE email = :email LIMIT 1";
     $stmt = $conexion->prepare($sql);
     $stmt->execute([':email' => $email]);
     $usuario = $stmt->fetch();
