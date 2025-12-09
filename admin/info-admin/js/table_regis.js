@@ -77,9 +77,8 @@ function enviarFormulario(e) {
         // Enviar datos en AJAX
         const formData = new FormData(formRegister);
         
-        const url = 'php/proceso-register.php';
         // Asegúrate de que la URL sea correcta
-        fetch(url, {
+        fetch('/PAGINA/admin-info/php/proceso-register.php', {
             method: 'POST',
             body: formData
         })

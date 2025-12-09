@@ -1,6 +1,6 @@
 <?php
 // RUTA CORRECTA (yave.php está en la raíz)
-require_once __DIR__ . '/info-admin.php';
+require_once __DIR__ . '/yave.php';
 
 // Llamar a conectarDB() explícitamente
 $conexion = conectarDB();

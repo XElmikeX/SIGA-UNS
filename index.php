@@ -3,91 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Horario De Trabajo</title>
-    <link rel="icon" href="imagenes/logo.png">
-    <link rel="stylesheet" href="tabla.css">
-</head>
-<body>
-    
-    <div class="calculos">
-        <table>
-            <thead>
-                <tr>
-                    <th>HORA</th>
-                    <th>LUNES</th>
-                    <th>MARTES</th>
-                    <th>MIERCOLES</th>
-                    <th>JUEVES</th>
-                    <th>VIERNES</th>
-                    <th>SABADO</th>
-                    <th>DOMINGO</th>
-                </tr> 
-            </thead>
-            <tbody>           
-                <tr>
-                    <td>7 am</td>
-                    <td></td>
-                    <td></td>
-                    <td class="Programación" rowspan="2">
-                        <p class="color">Fundamentos de Programación</p>
-                        <p><strong>(Practica)</strong></p>
-                        <p><strong>7-9 pm</strong></p>
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <!-- ... resto de tu tabla HTML ... -->
-            </tbody>
-        </table>
-    </div>
-    
-    <div class="caja2">
-        <h3>Usuarios Registrados</h3>
-        <div>
-            <form id="form" novalidate>
-                <p class="message" style="font-size: 1.2rem;">Datos del usuario nuevo</p>
-                <div>
-                    <label>
-                    <input name="userName" class="input usuario" type="text" placeholder="" required>
-                    <span class="span">Primer Nombre</span>
-                    </label>
-                </div>
-                
-                <div>
-                    <label>
-                    <input name="userEmail" class="input email" type="email" placeholder="" required>
-                    <span class="span">Gmail</span>
-                    </label>
-                </div>
-                
-                <div>
-                    <label>
-                    <input name="userPassword" class="input password" type="password" placeholder="" required>
-                    <span class="span">Contraseña</span>
-                    </label>
-                </div>
-                
-                <div>
-                    <button type="submit" name="mejoramiento" class="submit">Registrar</button>
-                    <div class="alerta-correct"></div>
-                    <div class="alerta-deneg"></div>
-                </div>
-            </form>
-        </div>
+    <title>SIGA</title>
 
-        <div style="margin-bottom: 20px;">
-            <table id="registro">
-                <tr>
-                    <th>Usuario</th>
-                    <th>Gmail</th>
-                    <th>Contraseña</th>
-                </tr>
-            </table>
+    <link rel="icon" href="G-assets/imagenes/logo.png">
+    <link rel="stylesheet" href="paginacentral/css/Pract.css">
+</head>
+<body id="menu">
+    <section id="interfas">
+        <article id="inter">
+            <div id="titulo">
+                <img class="logo" src="G-assets/imagenes/logo.png">
+                <h1 id="titul">SIGA</h1>
+                <img class="logo" src="G-assets/imagenes/logo.png">
+            </div>
+            <div class="part">
+                <a class="quitar" href="#contenedor" data-desplazamiento="90">Inicio</a>
+            </div>
+            <div class="part">
+                Información
+            </div>
+            <div class="part">
+                <a class="quitar" href="#contacto" data-desplazamiento="80px">Contacto</a>
+            </div>
+        </article>
+    </section>
+    <section id="contenedor">
+        <!--Administrador-->
+        <div>
+            <a target="_blank" href="admin/login_admin/index.php"><img class="opciones" src="G-assets/imagenes/administrador.png"></a>
         </div>
-    </div>
+        <!--Estudiante-->
+        <div>
+            <a target="_blank" href="estudiante/login_user/index.php"><img class="opciones" src="G-assets/imagenes/estudiante.png"></a>
+        </div>  
+        <!--Docente--> 
+        <div>
+            <a target="_blank" href="docente/login_docente/index.php"><img class="opciones" src="G-assets/imagenes/docente.png"></a>
+        </div>       
+    </section>
+
+
+    <footer id="contacto">
+        <article class="minic1">
+            <div id="config">
+                <p class="cont">Contacto</p>
+            </div>
+        </article>
+        <article class="minic1">
+                <label id="con">Gmail:</label>    
+                <a class="quitar" href="mailto:urbanodiaze@gmail.com">urbanodiaze@gmail.com</a>
+        </article>
+        <article class="minic1">
+                <fieldset id="caja">
+                    <form action="php/comentarios.php" method="POST" class="form" novalidate>
+                        <div class="cont1">
+                            <label for="gmail">Gmail:</label>
+                            <input name="gmail" class="gmail" type="email" cols="15px" placeholder="example@gmail.com">
+                        </div>
+                        
+                        <div class="cont1">
+                            <div>
+                                <label for="coment">Comentario: </label>
+                            </div>
+                            <div>
+                                <textarea name="comentario" class="coment" cols="25px" rows="8px" placeholder="Comentario..."></textarea>
+                            </div>  
+                        </div>
+                        <button class="boton" type="submit">Enviar</button>
+                        <button class="boton" type="reset">Borrar</button>
+                        <div class="alerta-exito">Enviado Correctamente</div>
+                        <div class="alerta-error">Rellene Correctamente</div>                    
+                    </form>                        
+                </fieldset>
+        </article>
+        <br>
+        <br>
+        <br>
+    </footer>
+
+    <script src="paginacentral/js/desplazamiento.js"></script>
+    <script src="paginacentral/js/comentario.js"></script>
     
-    <script src="js/table_regis.js"></script>
 </body>
 </html>
