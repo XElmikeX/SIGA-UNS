@@ -3,12 +3,12 @@
 require_once __DIR__ . '/db.php';
 
 function loginDesdeTabla($tabla, $email, $password) {
-    $conn = conectarDB();
+    $conexion = conectarDB();
 
     try {
         // Buscar usuario
         $sql = "SELECT * FROM $tabla WHERE email = :email LIMIT 1";
-        $stmt = $conn->prepare($sql);
+        $stmt = $conexion->prepare($sql);
         $stmt->execute([':email' => $email]);
         $usuario = $stmt->fetch(PDO::FETCH_ASSOC);
         
