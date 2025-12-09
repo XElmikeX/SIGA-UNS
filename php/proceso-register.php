@@ -36,7 +36,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     
     try {
         // 1. Verificar si el email ya existe
-        $checkQuery = "SELECT COUNT(*) FROM usuarios WHERE email_usuario = :userEmail";
+        $checkQuery = "SELECT COUNT(*) FROM usuarios WHERE email = :userEmail";
         $stmtCheck = $conexion->prepare($checkQuery);
         $stmtCheck->execute([':userEmail' => $userEmail]);
         
@@ -50,7 +50,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
 
         // 2. Insertar el nuevo usuario
-        $insertQuery = "INSERT INTO usuarios(nombre_usuario, email_usuario, password_usuario) 
+        $insertQuery = "INSERT INTO usuarios(nombre, email, password) 
                        VALUES(:userName, :userEmail, :userPassword)";
         $stmt = $conexion->prepare($insertQuery);
         $result = $stmt->execute([
