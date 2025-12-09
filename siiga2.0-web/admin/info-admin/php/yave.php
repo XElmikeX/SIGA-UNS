@@ -16,10 +16,10 @@ function conectarDB() {
     }
     
     $host = $db_opts['host'];
-    $port = $db_opts['port'] ?? 5432; // Usará 8080 si está en la URL
-    $db   = ltrim($db_opts['path'] ?? '/railway', '/');
-    $user = $db_opts['user'] ?? 'postgres';
-    $pass = $db_opts['pass'] ?? '';
+    $port = $db_opts['port']; 
+    $db   = ltrim($db_opts['path'], '/');
+    $user = $db_opts['user'];
+    $pass = $db_opts['pass'];
     
     // Asegurar conexión SSL(importante para Railway)
     $dsn = "pgsql:host=$host;port=$port;dbname=$db;sslmode=require";

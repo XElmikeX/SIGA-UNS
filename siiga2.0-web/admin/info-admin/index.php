@@ -177,7 +177,7 @@
         <h3>Usuarios Registrados</h3>
         
         <div>
-            <form action="php/proceso-register2.php" method="POST" id="form" novalidate>
+            <form action="php/proceso-register.php" method="POST" id="form" novalidate>
                 <p class="message" style="font-size: 1.2rem;">Datos del usuario nuevo</p>
                 <div>
                     <label>
