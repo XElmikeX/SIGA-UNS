@@ -7,7 +7,7 @@ $error = '';
 
 // 1. Si YA está logueado como admin, redirigir DIRECTAMENTE al dashboard
 if (isset($_SESSION['user_type']) && $_SESSION['user_type'] === 'admins') {
-    header('Location: ../../info-admin/index.php'); // ⬅️ ESTA es la ruta que quieres
+    header('Location: ../../info-admin/index.php'); 
     exit();
 }
 
