@@ -1,8 +1,4 @@
 <?php
-// proceso-register.php - VERSIÓN CORREGIDA FINAL
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 // RUTA CORRECTA (yave.php está en la raíz)
 require_once __DIR__ . '/info-admin.php';
 
