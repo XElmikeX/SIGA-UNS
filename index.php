@@ -3,91 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Horario De Trabajo</title>
-    <link rel="icon" href="imagenes/logo.png">
-    <link rel="stylesheet" href="tabla.css">
+    <title>Login de USER</title>
+
+    <!-- los iconos de google,github, usos de diferentes iconos -->
+    <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'>
+
+    <!-- conexcion a la decoración-->
+    <link rel="stylesheet" href="css/form.css">
+
+    <!-- ICONO de la pagina web-->
+    <link rel="icon" href="../../G-assets/imagenes/logo.png">
+
 </head>
 <body>
-    
-    <div class="calculos">
-        <table>
-            <thead>
-                <tr>
-                    <th>HORA</th>
-                    <th>LUNES</th>
-                    <th>MARTES</th>
-                    <th>MIERCOLES</th>
-                    <th>JUEVES</th>
-                    <th>VIERNES</th>
-                    <th>SABADO</th>
-                    <th>DOMINGO</th>
-                </tr> 
-            </thead>
-            <tbody>           
-                <tr>
-                    <td>7 am</td>
-                    <td></td>
-                    <td></td>
-                    <td class="Programación" rowspan="2">
-                        <p class="color">Fundamentos de Programación</p>
-                        <p><strong>(Practica)</strong></p>
-                        <p><strong>7-9 pm</strong></p>
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                <!-- ... resto de tu tabla HTML ... -->
-            </tbody>
-        </table>
-    </div>
-    
-    <div class="caja2">
-        <h3>Usuarios Registrados</h3>
-        <div>
-            <form id="form" novalidate>
-                <p class="message" style="font-size: 1.2rem;">Datos del usuario nuevo</p>
+    <!--   INICIO DE SESION   -->
+    <div class="container-form login">
+        <div class="information">
+            <div class="info-childs">
+                <h2>Bienvenido Estudiante</h2>
+                <p>Solicita a un ADMIN para que seas registrado</p>
+            </div>
+        </div>
+        <div class="form-information">
+            <div class="form-information-childs">
+                <h2>Iniciar sesión</h2>
+                <div class="icons">
+                    <i class='bx bxl-google' ></i>
+                    <i class='bx bxl-github' ></i>
+                    <i class='bx bxl-linkedin' ></i>
+                </div>
+            </div>
+            <p>Rellenar las casillas correspondientes</p>
+            <form action="php/login_user.php" method="POST" class="form form-login" novalidate>
                 <div>
                     <label>
-                    <input name="userName" class="input usuario" type="text" placeholder="" required>
-                    <span class="span">Primer Nombre</span>
+                    <i class='bx bx-envelope' ></i>
+                    <input type="email" placeholder="example@gmail.com" name="userEmail">
                     </label>
                 </div>
-                
                 <div>
                     <label>
-                    <input name="userEmail" class="input email" type="email" placeholder="" required>
-                    <span class="span">Gmail</span>
-                    </label>
+                    <i class='bx bx-lock-alt' ></i>
+                    <input type="password" placeholder="Contraseña" name="userPassword">
+                </label>
                 </div>
                 
-                <div>
-                    <label>
-                    <input name="userPassword" class="input password" type="password" placeholder="" required>
-                    <span class="span">Contraseña</span>
-                    </label>
-                </div>
-                
-                <div>
-                    <button type="submit" name="mejoramiento" class="submit">Registrar</button>
-                    <div class="alerta-correct"></div>
-                    <div class="alerta-deneg"></div>
-                </div>
+                <input type="submit" value="Iniciar Sesión">
+                <div class="alerta-exito">Inicio exitoso</div>
+                <div class="alerta-error">Rellana las casillas</div>
             </form>
         </div>
-
-        <div style="margin-bottom: 20px;">
-            <table id="registro">
-                <tr>
-                    <th>Usuario</th>
-                    <th>Gmail</th>
-                    <th>Contraseña</th>
-                </tr>
-            </table>
-        </div>
     </div>
-    
-    <script src="js/table_regis.js"></script>
+
+    <script src="estudiante/login_user/js/register.js" type="module"></script>
+    <script src="estudiante/login_user/js/login_modulo.js" type="module"></script>
 </body>
 </html>

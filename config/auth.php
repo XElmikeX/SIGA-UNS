@@ -8,7 +8,9 @@ function autenticarUsuario($email, $password, $tipo) {
     $conexion = conectarDB();
     if (!$conexion) return false;
     
-    $sql = "SELECT * FROM $tipo WHERE email = :email LIMIT 1";
+    $tabla = obtenerTablaPorTipo($tipo);
+    
+    $sql = "SELECT * FROM $tabla WHERE email = :email LIMIT 1";
     $stmt = $conexion->prepare($sql);
     $stmt->execute([':email' => $email]);
     $usuario = $stmt->fetch();
@@ -24,8 +26,10 @@ function registrarUsuario($datos, $tipo) {
     $conexion = conectarDB();
     if (!$conexion) return false;
     
+    $tabla = obtenerTablaPorTipo($tipo);
+    
     // Verificar si email ya existe
-    $checkSql = "SELECT COUNT(*) FROM $tipo WHERE email = :email";
+    $checkSql = "SELECT COUNT(*) FROM $tabla WHERE email = :email";
     $checkStmt = $conexion->prepare($checkSql);
     $checkStmt->execute([':email' => $datos['email']]);
     
@@ -40,7 +44,7 @@ function registrarUsuario($datos, $tipo) {
     $campos = array_keys($datos);
     $placeholders = ':' . implode(', :', $campos);
     
-    $sql = "INSERT INTO $tipo (" . implode(', ', $campos) . ") 
+    $sql = "INSERT INTO $tabla (" . implode(', ', $campos) . ") 
             VALUES ($placeholders)";
     
     try {

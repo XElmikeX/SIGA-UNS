@@ -1,4 +1,5 @@
 <?php
+// config/database.php
 function conectarDB() {
     $db_url = getenv('DATABASE_URL');
     
@@ -34,3 +35,14 @@ function conectarDB() {
         return false;
     }
 }
+
+// ✅ AÑADE ESTA FUNCIÓN AQUÍ para que auth.php la use
+function obtenerTablaPorTipo($tipo) {
+    switch($tipo) {
+        case 'admin': return 'admins';
+        case 'docente': return 'docentes';
+        case 'usuarios': return 'usuarios';
+        default: return 'usuarios';
+    }
+}
+?>
