@@ -1,0 +1,295 @@
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family:'monserrat', sans-serif;
+}
+
+body{
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-image:url(../../../G-assets/imagenes/fondo-registro.png);
+  background-size: cover;
+}
+
+.container-form {
+  display:flex;
+  box-shadow: 0 5px 7px rgba(0,0,0, .1);
+  height:500px;
+  max-width: 900px;
+  border-radius:20px;
+  transition: all 1s ease;
+  margin:10px;
+}
+
+/*PARTE DE BIENVENIDO*/
+.information{
+  width: 40%;
+  display:flex;
+  align-items: center;
+  text-align: center;
+  background:radial-gradient(ellipse at center right,black 40%,rgb(128, 248, 30));
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+
+.info-childs{
+  width:100%;
+  padding: 0 30px;
+}
+
+.info-childs h2{
+  font-size:2.5rem;
+  color:#ffffff
+}
+
+.info-childs p{
+  margin: 15px 0;
+  color:#f7bcbc;
+}
+
+.info-childs input{
+  background-color: transparent;
+  outline:none;
+  border-radius:20px;
+  border:2px solid #0404be;
+  box-sizing:border-box;
+  padding: 10px 20px;
+  color:#240677;
+  cursor:pointer;
+  transition:all .3 ease;
+}
+
+.info-childs input:hover{
+  background-color:aquamarine;
+  color:blueviolet;
+  box-shadow: 0 2px 5px rgba(0,0,.1);
+}
+
+
+/*PARTE DE CREAR CUENTA*/
+.form-information{
+  width: 60%;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-color:aliceblue;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.form-information-childs{
+  padding: 0 30px;
+}
+
+.form-information-childs h2{
+  font-size: 2rem;
+  color:#333;
+}
+
+.form-information-childs p{
+  color:#555;
+}
+
+/*Ajuste de los iconos*/
+.icons{
+  padding:15px 0;
+}
+
+.icons i {
+  border-radius: 50%;
+  padding: 15px;
+  margin:0 10px;
+  border:1px solid #555;
+  color: #555;
+  cursor:pointer;
+  transition:background-color .3 ease;
+}
+
+.icons i:hover{
+  box-shadow: 0 2px 5px rgba(0,0,.1);
+  background-color:#555;
+  color:aliceblue;
+}
+
+/*Optimización del formulario*/
+.form{
+  margin:30px 0 0 0;
+}
+
+.form label{
+  display: flex;
+  align-items:center;
+  margin-bottom: 15px;
+  border-radius:20px;
+  padding: 0 10px;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0 1px 3px rgba(0,0,.1);
+}
+
+.form label input{
+  width:100%;
+  padding: 10px;
+  background-color: rgb(255, 255, 255);
+  border:none;
+  outline: none;
+  border-radius:20px;
+  color:black
+}
+
+.form label i{
+  color: #a7a7a7;
+}
+
+.form input[type="submit"]{
+  padding: 5px 15px;
+  font-size: 18px;
+  border-radius:20px;
+  margin-top:10px;
+  border:none;
+  cursor:pointer;
+  color: rgb(45, 252, 234);
+  background-color: rgb(101, 101, 255);
+  box-shadow: 0 2px 5px rgba(0,0,.1);
+}
+
+.form input[type="submit"]:hover{
+  background-color: #240677;
+  color: antiquewhite;
+}
+
+/*Configuración de ALERTAS*/
+.form div .alerta{
+  width: 150px;
+  color: rgb(255, 0, 0);
+  margin-bottom: 15px;
+  margin-bottom: 15px;
+}
+
+.form > .alerta-exito,
+.form > .alerta-error{
+  display:none;
+}
+
+.form .alertaExito{
+  display:block;
+  background-color: rgb(73, 243, 124);
+  border: 2px solid rgb(3, 155, 41);
+  margin-top: 15px;
+  margin-bottom: 15px;
+  padding: 2px 4px;
+  width: 150px;
+}
+.form .alertaError{
+  display:block;
+  background-color: rgb(243, 103, 103);
+  border: 2px solid red;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  padding: 2px 4px;
+  width: 200px;
+}
+
+.form .error{
+  outline:2px solid red;
+}
+
+/*Si se habre en un celular "RESPONSI"*/
+@media screen and (min-width:750px){
+  html{
+    font-size: 13px;
+  }
+  .form .alerta-exito{
+    font-size: 18px;
+  }
+  .form .alerta-error{
+    font-size: 16px;
+  }
+  /*Alerta de celular*/
+  .form div .alerta{
+    width: 250px;
+  }
+
+  /*envio de formulario*/
+  .form .alertaError{
+    margin-left: 15px;
+  }
+  .form .alertaExito{
+    margin-left: 35px;
+  }
+}
+
+@media screen and (max-width:750px){
+  html{
+    font-size: 12px;
+  }
+
+  /*Alerta de celular*/
+  .form .alerta-exito{
+    font-size: 16px;
+  }
+  .form .alerta-error{
+    font-size: 14px;
+  }
+  .form div .alerta{
+  width: 250px;
+  }
+  .form .alertaError{
+    margin-left: 10px;
+  }
+  .form .alertaExito{
+    margin-left: 33px;
+  }
+}
+@media screen and (max-width:500px){
+  html{
+    font-size: 10px;
+  }
+  .information{
+    background:radial-gradient(ellipse at center bottom,black 30%,rgb(35, 189, 236));
+  }
+
+  /*Alerta de celular*/
+  .form .alerta-exito{
+    font-size: 14px;
+  }
+  .form .alerta-error{
+    font-size: 12px;
+  }
+  .form div .alerta{
+  width: 220px;
+  }
+
+  /*Bienvenido a CELULAR*/
+  .container-form{
+    display:flex;
+    flex-direction: column;
+  }
+
+  .information{
+    height: 160px;
+    width: 100%;
+    background-color: rgb(255, 100, 61);
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 0;
+  }
+
+  /*CREAR UNA CUENTA de CELULAR*/
+  .form-information{
+    height: 500px;
+    width: 100%;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 20px;
+  }
+  /*ICONOS de CELULAR*/
+  .icons{
+    display:flex;
+  }
+}
+
+

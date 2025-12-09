@@ -1,0 +1,48 @@
+body{
+    font-size: 2rem;
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    margin: 0;
+}
+
+table{
+    border:1px solid black;
+    border-collapse: collapse;
+}
+
+tr > th{
+    border:1px solid black;
+    padding: 3px 20px;
+    background-color: cadetblue;
+}
+tr>td:first-child{
+    font-size: 1.5rem;
+}
+tr:nth-child(2n){
+    background-color: rgb(177, 241, 238);
+}
+tr > td{
+    border:1px solid black;
+}
+
+/*CASILLAS DE AREAS*/
+tbody .recreo{
+    background-color: rgb(231, 181, 71);
+}
+
+tbody .Programación {
+    background-color: rgb(220, 85, 224);
+    font-size: 1.5rem;
+}
+
+tbody .Medio{
+    background-color:  rgba(57, 216, 91, 0.877);
+    font-size: 1.5rem;
+}
+
+
+
+

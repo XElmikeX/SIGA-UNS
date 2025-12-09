@@ -1,6 +1,6 @@
 <?php
 // RUTA CORRECTA (yave.php está en la raíz)
-require_once __DIR__ . '/info-admin.php';
+require_once __DIR__ . '/yave.php';
 
 // Llamar a conectarDB() explícitamente
 $conexion = conectarDB();
@@ -11,8 +11,6 @@ if (!$conexion) {
         'success' => false,
         'message' => 'Base de datos no disponible. Intente más tarde.'
     ]);
-    // Registrar el error para ver si la conexión falla aquí
-    error_log("proceso-register.php: Conexión fallida al inicio.");
     exit();
 }
 
@@ -36,7 +34,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     
     try {
         // 1. Verificar si el email ya existe
-        $checkQuery = "SELECT COUNT(*) FROM usuarios WHERE email = :userEmail";
+        $checkQuery = "SELECT * FROM usuarios WHERE email = :userEmail";
         $stmtCheck = $conexion->prepare($checkQuery);
         $stmtCheck->execute([':userEmail' => $userEmail]);
         
