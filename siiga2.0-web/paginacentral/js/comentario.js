@@ -12,7 +12,7 @@ const valuacionDeCampos = {
 
 document.addEventListener("DOMContentLoaded",()=>{
     formComent.addEventListener("submit",e=>{
-        //e.preventDefault();
+        e.preventDefault();
         enviarFormulario(e);
     });
 
@@ -49,7 +49,7 @@ function enviarFormulario(e){
 
         const formData = new FormData(formComent);
 
-        const url = 'php/comentarios.php';
+        const url = 'paginacentral/php/comentarios.php';
 
         fetch(url,{
             method: 'POST',
@@ -69,11 +69,12 @@ function enviarFormulario(e){
                 alertaExito.classList.add("alertaExito");
                 alertaExito.textContent = data.message;
 
+                formComent.reset();
+
                 setTimeout(()=>{
                     alertaExito.classList.remove("alertaExito");
                 }, 3500);
             }else{
-                e.preventDefault();
                 alertaExito.classList.remove("alertaExito");
                 alertaError.classList.add("alertaError");
                 alertaError.textContent = data.message;
@@ -85,7 +86,6 @@ function enviarFormulario(e){
         })
 
         .catch(error=>{
-            e.preventDefault();
             alertaExito.classList.remove("alertaExito");
             alertaError.classList.add("alertaError");
             alertaError.textContent = "Error:" + error.message;
@@ -95,7 +95,6 @@ function enviarFormulario(e){
             }, 3500);
         })  
     }else{
-        e.preventDefault();
         alertaExito.classList.remove("alertaExito");
         alertaError.classList.add("alertaError");
         alertaError.textContent = "Rellene correctamente";
