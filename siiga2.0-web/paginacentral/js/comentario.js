@@ -1,4 +1,4 @@
-const formComent = document.querySelector(".form");
+const formComent = document.getElementById("form");
 const userEmail = document.querySelector(".gmail");
 const userComent = document.querySelector(".coment");
 
@@ -46,22 +46,64 @@ function enviarFormulario(e){
     verificarCampo(reglaComent, userComent);
 
     if(valuacionDeCampos.gmail && valuacionDeCampos.comentario) {
-        valuacionDeCampos.gmail = false;
-        valuacionDeCampos.comentario = false;
-        
-        alertaExito.classList.add("alertaExito");
-        alertaError.classList.remove("alertaError");
-        setTimeout(()=>{
+
+        const formData = new FormData(formComent);
+
+        const url = 'php/comentarios.php';
+
+        fetch(url,{
+            method: 'POST',
+            body: formData
+        })
+
+        .then(response=>{
+            return response.json();
+        })
+
+        .then(data=>{
+            if(data.success){
+                valuacionDeCampos.gmail = false;
+                valuacionDeCampos.comentario = false;
+                
+                alertaError.classList.remove("alertaError");
+                alertaExito.classList.add("alertaExito");
+                alertaExito.textContent = data.message;
+
+                setTimeout(()=>{
+                    alertaExito.classList.remove("alertaExito");
+                }, 3500);
+            }else{
+                e.preventDefault();
+                alertaExito.classList.remove("alertaExito");
+                alertaError.classList.add("alertaError");
+                alertaError.textContent = data.message;
+
+                setTimeout(()=>{
+                    alertaError.classList.remove("alertaError");
+                }, 3500);
+            }
+        })
+
+        .then(error=>{
+            e.preventDefault();
             alertaExito.classList.remove("alertaExito");
+            alertaError.classList.add("alertaError");
+            alertaError.textContent = "Error:" + error.message;
+
+            setTimeout(()=>{
+                alertaError.classList.remove("alertaError");
+            }, 3500);
+        })  
+    }else{
+        e.preventDefault();
+        alertaExito.classList.remove("alertaExito");
+        alertaError.classList.add("alertaError");
+        alertaError.textContent = "Rellene correctamente";
+
+        setTimeout(()=>{
+            alertaError.classList.remove("alertaError");
         }, 3500);
-        return;
     }
-    e.preventDefault();
-    alertaExito.classList.remove("alertaExito");
-    alertaError.classList.add("alertaError");
-    setTimeout(()=>{
-        alertaError.classList.remove("alertaError");
-    }, 3500);
     
 };
 

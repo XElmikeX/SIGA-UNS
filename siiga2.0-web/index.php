@@ -55,7 +55,7 @@
         </article>
         <article class="minic1">
                 <fieldset id="caja">
-                    <form action="php/comentarios.php" method="POST" class="form" novalidate>
+                    <form action="php/comentarios.php" method="POST" id="form" novalidate>
                         <div class="cont1">
                             <label for="gmail">Gmail:</label>
                             <input name="gmail" class="gmail" type="email" cols="15px" placeholder="example@gmail.com">
