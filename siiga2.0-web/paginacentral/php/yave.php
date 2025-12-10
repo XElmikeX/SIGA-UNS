@@ -1,5 +1,5 @@
 <?php
-    function conectarDB() {
+    function conexionDB() {
         $db_url = getenv('DATABASE_URL');
 
         // Parsear la URL:host, puerto, usuario, contraseña, nom del BD

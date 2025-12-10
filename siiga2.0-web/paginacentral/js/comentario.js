@@ -1,6 +1,6 @@
 const formComent = document.getElementById("form");
-const userEmail = document.querySelector(".gmail");
-const userComent = document.querySelector(".coment");
+const userEmail = document.querySelector("form input[type='email']");
+const userComent = document.querySelector("form .coment");
 
 const reglaEmail = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9]+\.[a-zA-Z0-9-.]+$/;
 const reglaComent = /^.{3,150}$/;
@@ -13,7 +13,7 @@ const valuacionDeCampos = {
 document.addEventListener("DOMContentLoaded",()=>{
     formComent.addEventListener("submit",e=>{
         e.preventDefault();
-        enviarFormulario(e);
+        enviarFormulario();
     });
 
     userEmail.addEventListener("input",()=>{
@@ -39,7 +39,7 @@ function verificarCampo(regla,campo){
 const alertaExito = document.querySelector(".alerta-exito");
 const alertaError = document.querySelector(".alerta-error");
 
-function enviarFormulario(e){
+function enviarFormulario(){
 
     /*ES UNA VALIDACION POR SEGUNDA VEZ*/
     verificarCampo(reglaEmail, userEmail);
@@ -51,16 +51,16 @@ function enviarFormulario(e){
 
         const url = 'paginacentral/php/comentarios.php';
 
-        fetch(url,{
+        fetch(url, {
             method: 'POST',
             body: formData
         })
 
-        .then(response=>{
+        .then(response => {
             return response.json();
         })
 
-        .then(data=>{
+        .then(data => {
             if(data.success){
                 valuacionDeCampos.gmail = false;
                 valuacionDeCampos.comentario = false;
@@ -71,7 +71,7 @@ function enviarFormulario(e){
 
                 formComent.reset();
 
-                setTimeout(()=>{
+                setTimeout(() => {
                     alertaExito.classList.remove("alertaExito");
                 }, 3500);
             }else{
@@ -79,7 +79,7 @@ function enviarFormulario(e){
                 alertaError.classList.add("alertaError");
                 alertaError.textContent = data.message;
 
-                setTimeout(()=>{
+                setTimeout(() => {
                     alertaError.classList.remove("alertaError");
                 }, 3500);
             }
@@ -99,7 +99,7 @@ function enviarFormulario(e){
         alertaError.classList.add("alertaError");
         alertaError.textContent = "Rellene correctamente";
 
-        setTimeout(()=>{
+        setTimeout(() => {
             alertaError.classList.remove("alertaError");
         }, 3500);
     }
