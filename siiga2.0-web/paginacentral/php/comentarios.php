@@ -6,7 +6,7 @@
     if($_SERVER['REQUEST_METHOD'] == 'POST'){
         header('Content-Type: application/json');
 
-        if (empty($_POST['gmail'] || empty($_POST['comentario']))){
+        if (empty($_POST['gmail']) || empty($_POST['comentario'])){
             echo json_encode([
                 'success'=>false,
                 'message'=>'Rellenar todos los espacios',
