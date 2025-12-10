@@ -34,7 +34,7 @@
                 </div>
             </div>
             <p>Rellenar las casillas correspondientes</p>
-            <form action="php/login_user.php" method="POST" class="form form-login" novalidate>
+            <form action="php/login_estudiante.php" method="POST" class="form form-login" novalidate>
                 <div>
                     <label>
                     <i class='bx bx-envelope' ></i>
@@ -55,7 +55,6 @@
         </div>
     </div>
 
-    <script src="js/script.js"></script>
     <script src="js/register.js" type="module"></script>
     <script src="js/login_modulo.js" type="module"></script>
 </body>
