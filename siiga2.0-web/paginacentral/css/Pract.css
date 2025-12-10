@@ -131,10 +131,10 @@ fieldset .cont:first-child{
     overflow: auto;
 }
 
-.form > .cont1:first-child{
+form > .cont1:first-child{
     margin-bottom: 15px;
 }
-.form > .cont1:nth-child(2){
+form > .cont1:nth-child(2){
     margin-bottom: 10px;
 }
 
@@ -180,15 +180,14 @@ fieldset .cont:first-child{
 }
 
 /*ALERTA DE ENVIO DEL COMENTARIO*/
-.form > .alerta-exito,
-.form > .alerta-error{
-    color: black;
+form > .alerta-exito,
+form > .alerta-error{
     color: black;
     text-align: center;
     display:none;
 }
 
-.form .alertaExito{
+form .alertaExito{
     display:block;
     background-color: chartreuse;
     border: 2px solid rgb(0, 0, 0);
@@ -198,7 +197,7 @@ fieldset .cont:first-child{
     width: 160px;
 }
 
-.form .alertaError{
+form .alertaError{
     display:block;
     background-color: rgb(240, 41, 41);
     border: 2px solid rgb(0, 0, 0);
