@@ -19,7 +19,7 @@
         $userComent = htmlspecialchars($_POST['comentario']);
 
     try{
-        $insertQuery = "INSERT INTO comentarios(email,comentario) VALUES(':userEmail','userComent')";
+        $insertQuery = "INSERT INTO comentarios(email,comentario) VALUES(':userEmail',':userComent')";
         $stmtQuery = $conexion -> prepare($insertQuery);
         $resultado = $stmtQuery -> execute([
             ':userEmail' => $userEmail,

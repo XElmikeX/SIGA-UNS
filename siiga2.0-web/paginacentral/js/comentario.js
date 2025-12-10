@@ -84,7 +84,7 @@ function enviarFormulario(e){
             }
         })
 
-        .then(error=>{
+        .catch(error=>{
             e.preventDefault();
             alertaExito.classList.remove("alertaExito");
             alertaError.classList.add("alertaError");
