@@ -24,7 +24,7 @@
         } catch (PDOException $e) {
             error_log("Error PDO: " . $e->getMessage());
             error_log("DSN intentado: $dsn");
-            return false;
+            return null;
         }
     }
 ?>

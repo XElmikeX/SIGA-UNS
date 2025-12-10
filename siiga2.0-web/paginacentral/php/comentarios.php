@@ -18,34 +18,34 @@
         $userEmail = htmlspecialchars($_POST['gmail']);
         $userComent = htmlspecialchars($_POST['comentario']);
 
-    try{
-        $insertQuery = "INSERT INTO comentarios(email,comentario) VALUES(:userEmail,:userComent)";
-        $stmtQuery = $conexion -> prepare($insertQuery);
-        $resultado = $stmtQuery -> execute([
-            ':userEmail' => $userEmail,
-            ':userComent' => $userComent,
-        ]);
-
-        if($resultado){
-            echo json_encode([
-                'success' => true,
-                'message' => 'Comentario Enviado'
+        try{
+            $insertQuery = "INSERT INTO comentarios(email,comentario) VALUES(:userEmail,:userComent)";
+            $stmtQuery = $conexion -> prepare($insertQuery);
+            $resultado = $stmtQuery -> execute([
+                ':userEmail' => $userEmail,
+                ':userComent' => $userComent,
             ]);
-        }else{
+
+            if($resultado){
+                echo json_encode([
+                    'success' => true,
+                    'message' => 'Comentario Enviado'
+                ]);
+            }else{
+                echo json_encode([
+                    'success' => false,
+                    'message' => 'No Enviar',
+                ]);
+                exit();
+            }
+        }catch (PDOException $e){
+            error_log('Error en la DB:' . $e->getMessage());
             echo json_encode([
                 'success' => false,
-                'message' => 'No Enviar',
+                'message' =>'Error en la DB:' . $e->getMessage(),
             ]);
             exit();
         }
-    }catch (PDOException $e){
-        error_log('Error en la DB:' . $e->getMessage());
-        echo json_encode([
-            'success' => false,
-            'message' =>'Error en la DB:' . $e->getMessage(),
-        ]);
-        exit();
-    }
            
     }else{
         header('Content-Type: application/json');
